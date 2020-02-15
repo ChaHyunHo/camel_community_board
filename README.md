@@ -2,7 +2,6 @@
 
 #### [사이트 주소](http://chamym.cafe24.com/)
 
+### 반응형 웹페이지
+<img src="https://user-images.githubusercontent.com/38008152/74584891-6dd0e580-501a-11ea-9c0b-a845a46a9f59.PNG" height="100%" width="100%">
 
-<img src="https://user-images.githubusercontent.com/38008152/74584676-51cc4480-5018-11ea-8ed0-01d8d65c222a.png" height="40%" width="30%">
-
-<div><img src="https://user-images.githubusercontent.com/38008152/74584510-63ace800-5016-11ea-9248-daac52b83335.png" height="70%" width="50%"></div>
