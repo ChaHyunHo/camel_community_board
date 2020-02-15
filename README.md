@@ -50,3 +50,6 @@
 
 ## Total Search and Search by board
 <img src="https://user-images.githubusercontent.com/38008152/74587006-d88d1b80-5030-11ea-9b27-373cf05e1185.PNG" height="100%" width="100%">
+
+## Hierarchy Reply and Order
+<img src="https://user-images.githubusercontent.com/38008152/74587150-57cf1f00-5032-11ea-9431-edfc9ed2afaf.PNG" height="60%" width="60%">
