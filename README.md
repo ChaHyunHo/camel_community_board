@@ -57,3 +57,6 @@
 
 ## Hierarchy Reply and Order
 <img src="https://user-images.githubusercontent.com/38008152/74587150-57cf1f00-5032-11ea-9431-edfc9ed2afaf.PNG" height="80%" width="80%">
+
+## Img Upload  Good & Bad
+<img src="https://user-images.githubusercontent.com/38008152/74587288-12abec80-5034-11ea-9855-114bc15aee83.PNG" height="80%" width="80%">
