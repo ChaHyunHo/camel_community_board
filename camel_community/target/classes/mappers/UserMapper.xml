@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- CDATA는  XML에서 부등호를 사용하기위해 사용한다. <![CDATA[ ]]> -->
+
+<mapper namespace="userMapper">
+	
+	<resultMap type="userVO" id="userMap">
+		<id property="userId" column="user_id" />
+		<result property="userNumber" column="user_number"/>
+		<result property="userPw" column="user_pw" />
+		<result property="userName" column="user_name" />
+		<result property="userNickname" column="user_nickname" />
+		<result property="email" column="email" />
+		<result property="emailKey" column="email_key" />
+		<result property="userAbout" column="user_about" />
+		<result property="userRegisterDate" column="user_register_date" />
+		<result property="userUpdateDate" column="user_update_date" />
+		<result property="enabled" column="enabled" />
+		<result property="userPoint" column="user_point" />
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+	
+	<resultMap type="authVO" id="authMap">
+		<result property="userId" column="user_id" />
+		<result property="auth" column="auth" />
+	</resultMap>
+	
+	<select id="read" resultMap="userMap">
+		SELECT 
+			u.user_id,
+			user_number,
+		    user_pw,
+		    user_name,
+		    user_nickname,
+		    email,
+		    email_key,
+		    user_about,
+		    user_register_date,
+		    user_update_date,
+		    enabled,
+		    user_point,
+		    auth
+		FROM 
+			user u left outer join user_auth au on u.user_id = au.user_id
+		WHERE 
+			u.user_id = #{userId};
+	</select>
+	
+	<insert id="create">
+		INSERT INTO 
+			user (
+					user_id, 
+					user_pw, 
+					user_name, 
+					user_nickname, 
+					email,
+					email_key, 
+					user_about
+				 ) 
+		VALUES 	 (
+					#{userId}, 
+					#{userPw}, 
+					#{userName}, 
+					#{userNickname}, 
+					#{email}, 
+					#{emailKey},
+					#{userAbout}
+				 )
+	</insert>
+	
+	<insert id="authCreate">
+		INSERT INTO 
+			user_auth (
+						user_id, 
+						auth
+					  ) 
+				 
+		VALUES 	 (
+					#{userId}, 
+					#{auth}
+				 )
+	
+	</insert>
+	
+	<update id="update">
+		UPDATE
+			user
+		SET
+			user_pw = #{userPw},
+			user_nickname = #{userNickname},
+			email = #{email},
+			user_about = #{userAbout},
+			user_update_date = now()
+		WHERE
+			user_id = #{userId}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM
+			user
+		WHERE
+			user_id = #{userId}
+	</delete>
+	
+	<delete id="authDelete">
+		DELETE FROM
+			user_auth
+		WHERE
+			user_id = #{userId}
+	</delete>
+	
+	<update id="emailKeyUpdate">
+		UPDATE
+			user
+		SET
+			email_key = #{emailKey}
+		WHERE
+			user_id = #{userId}
+	</update>
+	
+	<update id="emailStatusUpdate">
+		UPDATE
+			user
+		SET
+			enabled = #{enabled}
+		WHERE
+			user_id = #{userId}
+			AND
+			email_key = #{emailKey}
+	</update>
+	
+	<select id="emailKeyAndUserId" resultType="userVO">
+		SELECT 
+			user_id,
+			user_number,
+		    user_pw,
+		    user_name,
+		    user_nickname,
+		    email,
+		    email_key,
+		    user_about,
+		    user_register_date,
+		    user_update_date,
+		    enabled,
+		    user_point
+		FROM 
+			user 
+		WHERE 
+			user_id = #{userId}
+			AND
+			email_key = #{emailKey}
+	
+	</select>
+	
+	<select id="userIdDuplCheck" resultType="int">
+		SELECT
+			COUNT(user_id)
+		FROM
+			user
+		WHERE
+			user_id = #{userId}
+	</select>
+	
+	<select id="emailDuplCheck" resultType="int">
+		SELECT
+			COUNT(email)
+		FROM
+			user
+		WHERE
+			email = #{email}
+	</select>
+	
+	<select id="nicknameDuplCheck" resultType="int">
+		SELECT
+			COUNT(user_nickname)
+		FROM
+			user
+		WHERE
+			user_nickname = #{userNickname}
+	</select>
+</mapper>

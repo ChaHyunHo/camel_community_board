@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- CDATA는  XML에서 부등호를 사용하기위해 사용한다. <![CDATA[ ]]> -->
+
+<mapper namespace="replyMapper">
+
+	<insert id="create">
+	
+		INSERT INTO
+			reply (
+					board_number,
+					reply_writer,
+					user_nickname,
+					reply_content
+					<if test="groupNumber != null" >
+						,group_number
+						,parent_reply_number
+						,depth
+					</if>
+				  )
+		VALUES
+				  (
+					#{boardNumber},
+					#{replyWriter},
+					#{userNickname},
+					#{replyContent}
+					<if test="groupNumber != null">
+						,#{groupNumber}
+						,#{replyNumber}
+						,#{depth} + 1
+					</if>
+				  )
+	</insert>
+	
+	<update id="orderNumberUpdate">
+		UPDATE 
+			reply 
+		SET 
+			order_number = #{orderCount}
+		WHERE reply_number = LAST_INSERT_ID();
+			
+	</update>
+	
+	<update id="groupNumberSet">
+		UPDATE 
+			reply 
+		SET 
+			group_number = LAST_INSERT_ID() 
+		WHERE reply_number = LAST_INSERT_ID();
+	</update>
+	
+	<select id="readAll" resultType="replyVO">
+	
+	SELECT A.* from (
+		SELECT  ou.reply_number AS reply_number,
+        ou.reply_writer AS reply_writer,
+        user_nickname, 
+		board_number,
+        group_number,
+        reply_content,
+        reply_register_date,
+        parent_reply_number,
+        reply_good_count,
+        depth, 
+        order_number, 
+        use_yn,
+        level FROM (
+		SELECT mn.reply_writer,
+		   user_nickname, 
+		   mn.reply_number, 
+	       board_number,
+		   group_number,
+	       reply_content,
+	       reply_register_date,
+	       parent_reply_number, 
+	       depth, 
+	       reply_good_count,
+	       order_number, 
+	       use_yn,
+	       level FROM (
+					   SELECT hierarchy_connect_by_parent_eq_prior_no(reply_number) AS reply_number,
+							  @level AS level
+					   FROM (
+							SELECT @start_with := 0, @id := @start_with, @level := 0
+							) vars, reply
+					   WHERE @id IS NOT NULL
+					   ) m
+						 JOIN reply mn ON mn.reply_number = m.reply_number
+		 ) ou
+	   ) A
+         where
+		 A.board_number = #{boardNumber} AND A.use_yn = 'Y'
+		 limit #{std.pageStart}, #{std.perPageNum}
+		 
+	</select>
+	
+	<select id="simpleList" resultType="replyVO">
+		SELECT 
+			* 
+		FROM 
+			reply 
+		WHERE 
+			board_number = #{boardNumber}	
+	</select>
+	
+	<select id="read" resultType="replyVO">
+		SELECT
+			reply.*
+		FROM
+			reply
+		WHERE 
+			reply_number = #{replyNumber}	
+			AND 
+			use_yn = 'Y'	
+	</select>
+
+	<delete id="delete">
+		UPDATE
+			reply
+		SET
+			use_yn = 'N'
+		WHERE
+			reply_number = #{replyNumber}
+	</delete>
+	
+	<update id="update">
+		UPDATE
+			reply
+		SET
+			reply_content = #{replyContent}
+		WHERE
+			reply_number = #{replyNumber}
+	</update>
+	
+	<select id="replyTotalCount" resultType="int">
+	SELECT
+		count(*)
+	FROM
+		reply
+	WHERE
+		board_number = #{boardNumber} AND use_yn = 'Y'
+	</select>
+	
+	<select id="childrentCheck" resultType="int">
+		 SELECT 
+		 	count(*)
+ 		 FROM 
+ 		 	reply
+         WHERE 
+         	group_number = (
+							  SELECT 
+							  	group_number
+							  FROM 
+							  	reply
+							  WHERE 
+							  	reply_number = #{replyNumber}
+                      		)
+		 AND 
+         	parent_reply_number = #{replyNumber}
+         AND
+         	use_yn = 'Y'
+	
+	</select>
+	
+	<select id="replyLikeList" resultType="replyLikeVO">
+		SELECT * 
+		FROM 
+			reply_like 
+		WHERE reply_number = #{replyNumber};
+	</select>
+	
+	<insert id="replyLikeCreate">
+		INSERT INTO 
+			reply_like 
+			(
+				reply_number, 
+				user_id
+			) 
+		VALUES 
+			(
+				#{replyNumber}, 
+				#{userId}
+			)
+	
+	</insert>
+	
+	<delete id="replyLikeDelete">
+		DELETE FROM 
+			reply_like 
+		WHERE 
+			(
+				reply_number = #{replyNumber}
+				AND
+				user_id = #{userId}
+			)
+	
+	</delete>
+	
+	<delete id="replyLikeAllDelete">
+		DELETE FROM 
+			reply_like 
+		WHERE 
+			(
+				reply_number = #{replyNumber}
+				
+			)
+	</delete>
+	
+	<select id="replyLikeCountRead" resultType="int">
+		SELECT COUNT(reply_number)
+		FROM
+			reply_like
+		WHERE
+			reply_number = #{replyNumber}
+	</select>
+	
+	<update id="replyLikeCountUpdate">
+		UPDATE
+			reply
+		SET
+			reply_good_count = #{totalCount}
+		WHERE
+			reply_number = #{replyNumber}
+	
+	
+	</update>
+
+</mapper>
