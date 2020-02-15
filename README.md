@@ -49,4 +49,4 @@
 <img src="https://user-images.githubusercontent.com/38008152/74586855-286ae300-502f-11ea-93b5-c8522c086f24.PNG" height="70%" width="70%">
 
 ## Total Search and Search by board
-<img src="https://user-images.githubusercontent.com/38008152/74586944-4e44b780-5030-11ea-849a-211e16d89a63.png" height="70%" width="70%">
+<img src="https://user-images.githubusercontent.com/38008152/74587006-d88d1b80-5030-11ea-9b27-373cf05e1185.PNG" height="100%" width="100%">
