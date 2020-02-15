@@ -63,7 +63,7 @@
 ## Img Upload
 <img src="https://user-images.githubusercontent.com/38008152/74587288-12abec80-5034-11ea-9855-114bc15aee83.PNG" height="80%" width="80%">
 
-## Good & Bod
+## Good & Bad
 <img src="https://user-images.githubusercontent.com/38008152/74587315-56065b00-5034-11ea-9660-bd5b2dfa06c6.PNG" height="80%" width="80%">
 
 ## Sign Up
