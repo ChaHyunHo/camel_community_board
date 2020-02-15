@@ -65,3 +65,8 @@
 
 ## Good & Bod
 <img src="https://user-images.githubusercontent.com/38008152/74587315-56065b00-5034-11ea-9660-bd5b2dfa06c6.PNG" height="80%" width="80%">
+
+## Sign Up
+<img src="https://user-images.githubusercontent.com/38008152/74587368-e5137300-5034-11ea-90ae-0b75138f361e.png" height="80%" width="80%">
+
+
