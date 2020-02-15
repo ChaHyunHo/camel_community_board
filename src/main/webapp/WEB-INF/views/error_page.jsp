@@ -10,19 +10,19 @@
 </head>
 <body>
 
-	<%-- <h4>${ex.getMessage() }</h4>
+	<h4>${ex.getMessage() }</h4>
 	
 	<ul>
 		<c:forEach items="${ex.getStackTrace()}" var="stack">
 			<li>${stack.toString() }</li>
 		</c:forEach>
 	
-	</ul> --%>
+	</ul>
 <script>
 	// console.log(errorInfo);
-
+/* 
 	alert("존재하지 않습니다.");
-	location.href = "/";
+	location.href = "/"; */
 </script>
 	  
 
