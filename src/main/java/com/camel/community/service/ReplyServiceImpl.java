@@ -26,8 +26,8 @@ public class ReplyServiceImpl implements ReplyService {
 	private BoardDAO boardDAO;
 	
 	/**
-	 * 댓글 등록 
-	 */
+	 * 댓글 등록   
+	 */ 
 	@Override
 	@Transactional
 	public void create(ReplyVO vo) throws Exception {
