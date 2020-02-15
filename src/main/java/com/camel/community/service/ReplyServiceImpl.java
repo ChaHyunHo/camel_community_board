@@ -26,7 +26,7 @@ public class ReplyServiceImpl implements ReplyService {
 	private BoardDAO boardDAO;
 	
 	/**
-	 * 댓글 등록 깃헙 테스트
+	 * 댓글 등록
 	 */
 	@Override
 	@Transactional
