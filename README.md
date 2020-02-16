@@ -109,7 +109,13 @@ private List<String> contentSplit;
 ## Good & Bad
 <img src="https://user-images.githubusercontent.com/38008152/74587315-56065b00-5034-11ea-9660-bd5b2dfa06c6.PNG" height="80%" width="80%">
 
+ * 추천과 비추천 기능
+   * 유튜브와 같이 추천을 한 상태에서 비추천을 클릭했을시에 추천이 취소되는 동시에 비추천이 클릭되는 효과를 주었습니다.
+
 ## Sign Up
 <img src="https://user-images.githubusercontent.com/38008152/74587368-e5137300-5034-11ea-90ae-0b75138f361e.png" height="80%" width="80%">
+
+* 회원가입
+  * Ajax를 이용하여 해당아이디의 등록 여부(1, 0)를 서버에서 가지고와 화면단에서 중복여부 체크및 정규식 체크를 한후 조건이 만족되면 전역변수에 false로 등록해 놓은 변수를 true로 주었습니다. 각각의 체크 전역 변수를 배열에 담아 한개라도 false생기면 회원 가입을 하지 못하게 하였습니다. 
 
 
