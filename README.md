@@ -73,8 +73,38 @@ private List<String> contentSplit;
 ## Hierarchy Reply and Order
 <img src="https://user-images.githubusercontent.com/38008152/74587150-57cf1f00-5032-11ea-9431-edfc9ed2afaf.PNG" height="80%" width="80%">
 
+* 계층형 댓글 
+  * 댓글 작업은 restAPI를 통해 작업하였습니다. 각 댓글의 그룹 번호, 부모 댓글 번호, 그룹내 순서를 정하여 그룹내 순서대로 깊이를 주었고
+  제이쿼리를 이용하여 Ajax로 리스트를 화면에 가지고와서 동적으로 뿌려주었습니다. 여기서 고민했던 부분은 동적으로 생성된 버튼은 어떻게 접근할지 그리고 답변 버튼을 클릭했을경우 인풋박스 창을 어떻게 가져와야 할지가 가장 큰 고민이었습니다. $(document).on 메소드를 이용하여 동적으로 생선된 버튼에 클릭 이벤트를 주었고 그 인벤트 안에서 생성된 댓글을 each문을 통해 $(this) 자기자신을 가리키는 댓글 창에 인풋 박스를 생성 시켜 해결하였습니다. 
+
+* 게시글 정렬 작업
+  * 게시글 정렬작업은 드롭메뉴를 통해서 get방식을 이용하여 쿼리로 각각의 정렬 이름값을 주고 그 값에 따른 마이바티스 동적 쿼리를 이용해 정렬 을 해주었습니다. 
+
+```java
+<sql id="sort">
+ 		<if test="sort != null">
+ 			<if test="sort == 'reset'.toString()">
+ 				new_count desc , board_register_date desc	
+ 			</if>
+ 			<if test="sort == 'date'.toString()">
+ 				board_register_date desc, new_count desc
+ 			</if>
+    ......
+```
+
 ## Img Upload
 <img src="https://user-images.githubusercontent.com/38008152/74587288-12abec80-5034-11ea-9855-114bc15aee83.PNG" height="80%" width="80%">
+
+* 스마트 에디터
+  * 게시글 작성을 할 때 텍스트에 여러 효과를 주기 위해서 사용하는 네이버 스마트 에디터를 사용해보았습니다. 네이버 Developers의 smartEditer 튜토리얼을 통해 에디터 자체를 세팅하는 데는 많은 어려움은 없었습니다. 하지만 이미지 파일을 업로드하기위해 smartEditer 디렉터리에 있는 코드를 수정하는 부분들과 버전 및 파일업로드용 컨트롤러를 작성하여 업로드하는 부분은 오픈소스를 이용하고 이해하는 방법밖에 없었습니다.
+스마트 에디터에 스프링 시큐리티는 영향을 줄 수밖에 없는데 그 이유는 csrf토큰을 활성화 시켰기 때문에 이미지를 업로드 하는 부분에서 csrf필터를 거칠수 밖에 없었습니다. 따라서 csrf토큰을 주어야 했는데 다중 멀티 업로드 부분은 Ajax가 적용 되었기 때문에 csrf토큰을 헤더 값으로 쉽게 줄 수 있었지만 싱글 업로드 이미지는 url GetMapping 통해 직접 줄수 밖에 없었기 때문에 url 주소 쿼리 값으로( _csrf=) 주어야 했습니다.
+
+```java
+ 	 var token = this.document.querySelector(".token").value;
+ 	     
+ 		oFileUploader = new jindo.FileUploader(jindo.$("uploadInputBox"),{
+ 		sUrl  : '/common/photoUpload?_csrf='+token,			
+```
 
 ## Good & Bad
 <img src="https://user-images.githubusercontent.com/38008152/74587315-56065b00-5034-11ea-9660-bd5b2dfa06c6.PNG" height="80%" width="80%">
