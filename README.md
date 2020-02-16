@@ -60,7 +60,7 @@
 ## Total Search and Search by board
 <img src="https://user-images.githubusercontent.com/38008152/74587006-d88d1b80-5030-11ea-9b27-373cf05e1185.PNG" height="100%" width="100%">
 
-* 전체 검색 및 게시판별 검색
+* 검색기능
   * and 조건과 or 조건을 분류하였을때 and 조건에 해당하는 경우 검색내용의 정확한 한가지 단어만 검색이 되게 하였습니다. 여기서 어려웠던 점은 or조건시 띄어쓴 부분을 나누어 각각의 단어를 검색하게 하는데 있었습니다. 따라서 띄어진 각단어를 비즈니스 로직을 통해 split 이용하여 배열에 넣고 List로 담아 주었습니다. 리스트에 담긴 각각의 단어는 마이바티스 foreach 컬렉션을 이용하여 모두 검색하게 하였습니다. 
   
 ```java
